@@ -38,9 +38,11 @@ public class CarrinhoResource {
 	}
 	
 	@DELETE
+	@Path("{id}/produtos/{produtoId}")
 	@Consumes(MediaType.APPLICATION_XML)
-	public Response remove(@PathParam("id")) {
-		
-		return Response.created(uri).build();
+	public Response remove(@PathParam("id") long id, @PathParam("produtoId") long produtoId) {
+		Carrinho carrinho = new CarrinhoDAO().busca(id);
+		carrinho.remove(produtoId);
+		return Response.ok().build();
 	}
 }
