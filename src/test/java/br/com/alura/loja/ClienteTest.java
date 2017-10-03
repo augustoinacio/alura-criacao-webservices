@@ -15,8 +15,6 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-import com.thoughtworks.xstream.XStream;
-
 import br.com.alura.loja.modelo.Carrinho;
 import br.com.alura.loja.modelo.Produto;
 
@@ -37,9 +35,9 @@ public class ClienteTest {
 
 	@Test
 	public void testaQueAConexaoComOServidorFunciona() {
-		String conteudo = target.path("/carrinhos/1").request().get(String.class);
+		Carrinho conteudo = target.path("/carrinhos/1").request().get(Carrinho.class);
 		System.out.println(conteudo);
-		Carrinho carrinho = (Carrinho) new XStream().fromXML(conteudo);
+		Carrinho carrinho = conteudo;
 		Assert.assertEquals("Rua Vergueiro 3185, 8 andar", carrinho.getRua());
 		// Assert.assertTrue(conteudo.contains("<rua>Rua Vergueiro 3185"));
 	}
@@ -52,8 +50,8 @@ public class ClienteTest {
 		carrinho.adiciona(new Produto(314L, "Microfone", 37, 1));
 		carrinho.setRua("Rua Vergueiro 3185");
 		carrinho.setCidade("São Paulo");
-		String xml = carrinho.toXML();
-		Entity<String> entity = Entity.entity(xml, MediaType.APPLICATION_XML);
+		// String xml = carrinho.toXML();
+		Entity<Carrinho> entity = Entity.entity(carrinho, MediaType.APPLICATION_XML);
 
 		Response response = target.path("/carrinhos").request().post(entity);
 		Assert.assertEquals(201, response.getStatus());

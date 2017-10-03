@@ -4,11 +4,19 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlRootElement;
+
 import com.google.gson.Gson;
 import com.thoughtworks.xstream.XStream;
 
+@XmlRootElement
+@XmlAccessorType(XmlAccessType.FIELD)
 public class Projeto {
 
+	public Projeto() {
+	}
 	private long id;
 	private String nome;
 	private int anoInicio;
@@ -37,8 +45,6 @@ public class Projeto {
 		this.anoInicio = anoInicio;
 	}
 
-	public Projeto() {
-	}
 
 	public String toXML() {
 		return new XStream().toXML(this);
@@ -56,10 +62,10 @@ public class Projeto {
 			}
 		}
 	}
-	
+
 	public Projeto adiciona(Projeto projeto) {
-			projetos.add(projeto);
-			return this;
+		projetos.add(projeto);
+		return this;
 	}
 
 }

@@ -16,10 +16,10 @@ import br.com.alura.loja.modelo.Projeto;
 public class ProjetoTest {
 
 	HttpServer server = new HttpServer();
-	
+
 	@Before
 	public void inicia() {
-		 server = Servidor.startaServidor();
+		server = Servidor.startaServidor();
 	}
 
 	@Test
@@ -34,10 +34,11 @@ public class ProjetoTest {
 	public void testaConexaoComServidorFuncionaNoPathDeProjetos() {
 		Client client = ClientBuilder.newClient();
 		WebTarget target = client.target("http://localhost:8080");
-		String conteudo = target.path("/projetos/1").request().get(String.class);
+		Projeto conteudo = target.path("/projetos/1").request().get(Projeto.class);
 		System.out.println(conteudo);
-		Assert.assertTrue(conteudo.contains("<nome>Minha loja"));
+		Assert.assertTrue(conteudo.getNome().contains("Minha loja"));
 	}
+
 	@After
 	public void finalizaServer() {
 		server.stop();
